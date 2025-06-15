@@ -135,7 +135,7 @@ void UBYGRichTextBlock::SetText( const FText& InText )
 {
 	Text = InText;
 
-	RebuildContents();
+	RebuildWidget();
 }
 
 void UBYGRichTextBlock::CreateDecorators( TArray< TSharedRef< class ITextDecorator > >& OutDecorators )
