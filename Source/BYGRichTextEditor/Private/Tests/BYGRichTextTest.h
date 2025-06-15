@@ -19,7 +19,12 @@ public:
 	FBYGRichTextParseTestBase( const FString& InName, const bool bInComplexTask );
 
 	virtual void GetTests(TArray<FString>& OutBeautifiedNames, TArray<FString>& OutTestCommands) const override;
-	virtual bool RunTest( const FString& Parameters ) override;
+    virtual bool RunTest(const FString& Parameters) override;
+
+    virtual FString GetReferencerName() const override
+    {
+        return TEXT("FBYGRichTextParseTestBase");
+    }
 
 protected:
 

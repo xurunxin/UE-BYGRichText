@@ -30,37 +30,37 @@ void UBYGRichTextStyle::AddProperty( UBYGRichTextPropertyBase* Property )
 void UBYGRichTextStyle::SortProperties()
 {
 	// For now there seems to be a problem with sorting stuff
-	return;
 #if WITH_EDITOR
 	TArray<UBYGRichTextPropertyBase*> NewProperties = Properties;
-	NewProperties.StableSort( []( const UBYGRichTextPropertyBase& A, const UBYGRichTextPropertyBase& B )
-	{
-		const int32 OrderA = A.GetClass()->GetIntMetaData( "DisplayOrder" );
-		const int32 OrderB = B.GetClass()->GetIntMetaData( "DisplayOrder" );
-		if ( OrderA == OrderB )
-		{
-			if ( A.GetClass() == B.GetClass() )
-			{
-				UE_LOG( LogTemp, Warning, TEXT( "Duplicate class!" ) );
-			}
-		}
-		return OrderA < OrderB;
-	} );
+    NewProperties.StableSort([](const UBYGRichTextPropertyBase& A, const UBYGRichTextPropertyBase& B)
+    {
+        if (!&A || !&B) return false; // 空指针保护
+        const int32 OrderA = A.GetClass()->GetIntMetaData("DisplayOrder");
+        const int32 OrderB = B.GetClass()->GetIntMetaData("DisplayOrder");
+        if (OrderA == OrderB)
+        {
+            // 次级排序：按类名
+            FString NameA = A.GetClass()->GetName();
+            FString NameB = B.GetClass()->GetName();
+            return NameA < NameB;
+        }
+        return OrderA < OrderB;
+    });
 
-	bool bSomethingChanged = false;
-	for (int32 i = 0 ; i < NewProperties.Num(); ++i )
-	{
-		if ( NewProperties[ i ] != Properties[ i ] )
-		{
-			bSomethingChanged = true;
-			break;
-		}
-	}
-	if ( bSomethingChanged )
-	{
-		UE_LOG( LogTemp, Warning, TEXT( "Sorting reordered something" ) );
-
-	}
+    bool bSomethingChanged = false;
+    for (int32 i = 0; i < NewProperties.Num(); ++i)
+    {
+        if (NewProperties[i] != Properties[i])
+        {
+            bSomethingChanged = true;
+            break;
+        }
+    }
+    if (bSomethingChanged)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Sorting reordered something"));
+        Properties = NewProperties; // 应用排序结果
+    }
 #endif
 }
 

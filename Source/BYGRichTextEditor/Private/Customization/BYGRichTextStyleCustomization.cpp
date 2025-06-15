@@ -74,8 +74,8 @@ void FBYGRichTextStyleCustomization::CustomizeDetails( IDetailLayoutBuilder& Det
 					.AutoWidth()
 					[
 						SNew( STextBlock )
-						.TextStyle( FEditorStyle::Get(), "ContentBrowser.TopBar.Font" )
-						.Font( FEditorStyle::Get().GetFontStyle( "FontAwesome.11" ) )
+						.TextStyle( FAppStyle::Get(), "ContentBrowser.TopBar.Font" )
+						.Font( FAppStyle::Get().GetFontStyle( "FontAwesome.11" ) )
 						.Text( FText::FromString( FString( TEXT( "\xf067" ) ) ) /*fa-plus*/ )
 						.Margin( FMargin( 0, 0, 4, 0 ) )
 					]
@@ -129,7 +129,7 @@ void FBYGRichTextStyleCustomization::CustomizeDetails( IDetailLayoutBuilder& Det
 			]
 		];
 	#endif
-	
+
 
 	for ( int32 i = 0; i < TextStyle->Properties.Num(); ++i )
 	{
@@ -182,7 +182,7 @@ void FBYGRichTextStyleCustomization::CustomizeDetails( IDetailLayoutBuilder& Det
 					return FReply::Handled();
 				} )
 				.ToolTipText( LOCTEXT( "RemovePropertyTooltip", "Remove Property" ) )
-				.ButtonStyle( FEditorStyle::Get(), "FlatButton" )
+				.ButtonStyle( FAppStyle::Get(), "FlatButton" )
 				[
 					SNew( SHorizontalBox )
 					+ SHorizontalBox::Slot()
@@ -191,8 +191,8 @@ void FBYGRichTextStyleCustomization::CustomizeDetails( IDetailLayoutBuilder& Det
 					.AutoWidth()
 					[
 						SNew( STextBlock )
-						.TextStyle( FEditorStyle::Get(), "ContentBrowser.TopBar.Font" )
-						.Font( FEditorStyle::Get().GetFontStyle( "FontAwesome.11" ) )
+						.TextStyle( FAppStyle::Get(), "ContentBrowser.TopBar.Font" )
+						.Font( FAppStyle::Get().GetFontStyle( "FontAwesome.11" ) )
 						.Text( FText::FromString( FString( TEXT( "\xf00d" ) ) ) /*fa-plus*/ )
 					]
 				]
@@ -218,16 +218,16 @@ void FBYGRichTextStyleCustomization::CustomizeDetails( IDetailLayoutBuilder& Det
 				.AutoWidth()
 				[
 					SNew(STextBlock)
-					.TextStyle(FEditorStyle::Get(), "TextBlock.ShadowedTextWarning")
+					.TextStyle(FAppStyle::Get(), "TextBlock.ShadowedTextWarning")
    					.ColorAndOpacity(WarningColor)
-					.Font(FEditorStyle::Get().GetFontStyle("FontAwesome.11"))
+					.Font(FAppStyle::Get().GetFontStyle("FontAwesome.11"))
 					.Text(FText::FromString(FString(TEXT("\xf071"))) /*fa-exclamation-triangle*/)
 				]
 				+ SHorizontalBox::Slot()
 				.AutoWidth()
 				[
 					SNew(STextBlock)
-					.TextStyle(FEditorStyle::Get(), "TextBlock.ShadowedTextWarning")
+					.TextStyle(FAppStyle::Get(), "TextBlock.ShadowedTextWarning")
 					.ColorAndOpacity(WarningColor)
 					.Text( FText::FormatNamed(
 						LOCTEXT( "NotSupportedFormat", "This property does not support '{DisplayType}'  display type. It will not be used." ),

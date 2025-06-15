@@ -10,7 +10,7 @@
 #include <Tests/AutomationEditorCommon.h>
 #include <FunctionalTestBase.h>
 
-static const int StylesheetTestFlags = (
+static const EAutomationTestFlags StylesheetTestFlags = (
 	EAutomationTestFlags::EditorContext
 	| EAutomationTestFlags::CommandletContext
 	| EAutomationTestFlags::ClientContext

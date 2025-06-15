@@ -12,7 +12,9 @@
 #include "Settings/BYGRichTextStylesheet.h"
 #include <UObject/GCObject.h>
 
-class SBYGRichTextTestWindow 
+#include "UObject/ObjectPtr.h"
+
+class SBYGRichTextTestWindow
 	: public SCompoundWidget
 	, public FGCObject
 {
@@ -21,7 +23,7 @@ public:
 	SLATE_BEGIN_ARGS( SBYGRichTextTestWindow )
 		//: _Messages()
 		{}
-		
+
 		/** All messages captured before this log window has been created */
 		//SLATE_ARGUMENT( TArray< TSharedPtr<FOutputLogMessage> >, Messages )
 
@@ -39,11 +41,16 @@ public:
 
 	virtual void AddReferencedObjects( FReferenceCollector& Collector ) override;
 
+    virtual FString GetReferencerName() const override
+    {
+        return TEXT("SBYGRichTextTestWindow");
+    }
+
 	// SWidget interface
 	//virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 
 protected:
-	UBYGRichTextBlock* RichTextBlock = nullptr;
-	UBYGRichTextStylesheet* Stylesheet = nullptr;
+	TObjectPtr<class UBYGRichTextBlock> RichTextBlock = nullptr;
+	TObjectPtr<class UBYGRichTextStylesheet> Stylesheet = nullptr;
 
 };

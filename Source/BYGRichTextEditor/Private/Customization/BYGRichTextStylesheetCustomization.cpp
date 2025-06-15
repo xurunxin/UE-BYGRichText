@@ -9,8 +9,10 @@
 #include "IDetailChildrenBuilder.h"
 #include "DetailWidgetRow.h"
 #include "Widgets/Text/STextBlock.h"
-#include <PropertyEditor/Public/IDetailCustomNodeBuilder.h>
+#include "IDetailCustomNodeBuilder.h"
 #include "BYGRichTextUIStyle.h"
+
+#include "UObject/ObjectPtr.h"
 
 #define LOCTEXT_NAMESPACE "BYGRichTextEditorModule"
 
@@ -37,20 +39,25 @@ public:
 		Collector.AddReferencedObject( RichTextBlock );
 		Collector.AddReferencedObject( Stylesheet );
 		Collector.AddReferencedObject( LocalTextStyleInstance );
-	}
-	//~ End FGCObject interface
+    }
+
+    virtual FString GetReferencerName() const override
+    {
+        return TEXT("FBYGStyleDetails");
+    }
+    //~ End FGCObject interface
 
 	FBYGOnDeleteActivatedSignature OnDeleteActivatedDelegate;
 
 protected:
 	void OnPropertyValueChanged();
 
-	class UBYGRichTextBlock* RichTextBlock = nullptr;
-	class UBYGRichTextStylesheet* Stylesheet = nullptr;
+	TObjectPtr<class UBYGRichTextBlock> RichTextBlock = nullptr;
+	TObjectPtr<class UBYGRichTextStylesheet> Stylesheet = nullptr;
 
 	TWeakObjectPtr<UBYGRichTextStylesheet> OwnerStylesheet;
 	TWeakObjectPtr<UBYGRichTextStyle> OwnerTextStyle;
-	UBYGRichTextStyle* LocalTextStyleInstance = nullptr;
+	TObjectPtr<class UBYGRichTextStyle> LocalTextStyleInstance = nullptr;
 	int32 Index;
 	FSimpleDelegate OnRegenerateChildren;
 };
@@ -87,8 +94,8 @@ void FBYGRichTextStylesheetCustomization::CustomizeDetails( IDetailLayoutBuilder
 				.AutoWidth()
 				[
 					SNew( STextBlock )
-					.TextStyle( FEditorStyle::Get(), "ContentBrowser.TopBar.Font" )
-					.Font( FEditorStyle::Get().GetFontStyle( "FontAwesome.11" ) )
+					.TextStyle( FAppStyle::Get(), "ContentBrowser.TopBar.Font" )
+					.Font( FAppStyle::Get().GetFontStyle( "FontAwesome.11" ) )
 					.Text( FText::FromString( FString( TEXT( "\xf067" ) ) ) /*fa-plus*/ )
 					.Margin( FMargin( 0, 0, 2, 0 ) )
 				]
@@ -288,7 +295,7 @@ void FBYGStyleDetails::GenerateChildContent( IDetailChildrenBuilder& ChildrenBui
 					return FReply::Handled();
 				} )
 				.ToolTipText( LOCTEXT( "RemoveStyleTooltip", "Remove Style" ) )
-				.ButtonStyle( FEditorStyle::Get(), "FlatButton" )
+				.ButtonStyle( FAppStyle::Get(), "FlatButton" )
 				[
 					SNew( SHorizontalBox )
 					+ SHorizontalBox::Slot()
@@ -297,8 +304,8 @@ void FBYGStyleDetails::GenerateChildContent( IDetailChildrenBuilder& ChildrenBui
 					.AutoWidth()
 					[
 						SNew( STextBlock )
-						.TextStyle( FEditorStyle::Get(), "ContentBrowser.TopBar.Font" )
-						.Font( FEditorStyle::Get().GetFontStyle( "FontAwesome.11" ) )
+						.TextStyle( FAppStyle::Get(), "ContentBrowser.TopBar.Font" )
+						.Font( FAppStyle::Get().GetFontStyle( "FontAwesome.11" ) )
 						.Text( FText::FromString( FString( TEXT( "\xf00d" ) ) ) /*fa-plus*/ )
 					]
 				]

@@ -35,14 +35,14 @@ public:
 
 	UPROPERTY(config, EditAnywhere, Category = Settings)
 	FString ParagraphSeparator;
-	
+
 	UPROPERTY(config, EditAnywhere, Category = Settings, meta = ( AllowedClasses = "Font", DisplayName="Fallback Font" ))
 	FSoftObjectPath FallbackFontPath;
 
 #if WITH_EDITOR
 	EDataValidationResult IsDataValid(TArray<FText>& ValidationErrors) override
 	{
-		EDataValidationResult Result = Super::IsDataValid(ValidationErrors);
+		EDataValidationResult Result = IsDataValid(ValidationErrors);
 
 		if (TagOpenCharacter.Len() <= 0)
 		{

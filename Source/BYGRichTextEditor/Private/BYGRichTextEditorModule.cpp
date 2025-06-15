@@ -28,13 +28,15 @@ namespace BYGRichTextModule
 
 TSharedRef<SDockTab> SpawnTestTab( const FSpawnTabArgs& Args )
 {
-	return SNew( SDockTab )
-		.Icon( FBYGRichTextUIStyle::GetBrush( "BYGRichText.TabIcon" ) )
+	TSharedRef<SDockTab> Tab = SNew( SDockTab )
 		.TabRole( ETabRole::NomadTab )
 		.Label( NSLOCTEXT( "BYGRichText", "TabTitle", "BYG Rich Text Test" ) )
 		[
 			SNew( SBYGRichTextTestWindow )
 		];
+
+	Tab->SetTabIcon(FBYGRichTextUIStyle::GetBrush("BYGRichText.TabIcon"));
+	return Tab;
 }
 
 void FBYGRichTextEditor::StartupModule()

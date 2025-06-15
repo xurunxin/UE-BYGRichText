@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 #include "UObject/GCObject.h"
+#include "UObject/ObjectPtr.h"
 
 class FBYGRichTextModule : public IModuleInterface, public FGCObject
 {
@@ -21,7 +22,12 @@ public:
 	const FSlateBrush* GetIconBrush( const FString& Path, const FVector2D& MaxSize );
 	class UBYGRichTextStylesheet* GetFallbackStylesheet() const { return FallbackStylesheet; }
 
-	TSharedPtr<class FSlateStyleSet> SlateStyleSet;
+    TSharedPtr<class FSlateStyleSet> SlateStyleSet;
+
+    virtual FString GetReferencerName() const override
+    {
+        return TEXT("FBYGRichTextModule");
+    }
 
 protected:
 	TMap<FString, FSlateBrush> InlineIconsCache;
@@ -31,5 +37,5 @@ protected:
 	void OnPostEngineInit();
 
 	// Default stylesheet used if no stylesheet is chosen, or there are problems
-	class UBYGRichTextStylesheet* FallbackStylesheet = nullptr;
+	TObjectPtr<class UBYGRichTextStylesheet> FallbackStylesheet = nullptr;
 };
